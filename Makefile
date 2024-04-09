@@ -6,9 +6,9 @@ NAME = philo
 
 #<------------------------------------||-------------------------------------->#
 
-PRG_D = ./philo/
+PRG_D =# ./philo/
 
-SRC_F = philo.c
+SRC_F = main.c parser.c philosophers.c dinner.c
 SRC_D = ./sources/
 
 OBJ_F = ${SRC_F:.c=.o}
@@ -167,38 +167,38 @@ color:
 	@echo "${ON_IWHITE}ONIWhite${DF}"
 
 ${NAME}: ${PRG_D} ${OBJ_D} ${DEP_D} ${OBJ}
-	${CC} ${CFLAGS} ${OBJ} -o ${PRG_D}${NAME}
-#	@echo "${RED}Compiling progam:${DF}"
-#	@echo "${BCYAN}${CC}${DF} ${BBLUE}${CFLAGS}${DF} ${BIGREEN}${OBJ_F}${DF} ${BCYAN}-o${DF} ${RED}${PRG_D}${NAME}${DF}"
+	@${CC} ${CFLAGS} -lpthread ${OBJ} -o ${PRG_D}${NAME}
+	@echo "${RED}Compiling progam:${DF}"
+	@echo "${BCYAN}${CC}${DF} ${BBLUE}${CFLAGS}${DF} ${BIGREEN}${OBJ_F}${DF} ${BCYAN}-o${DF} ${RED}${PRG_D}${NAME}${DF}"
 
 ${OBJ_D}%.o: ${SRC_D}%.c Makefile
-	${CC} ${CFLAGS} -MMD -c $< -o $@
-#	@echo "${BCYAN}${CC}${DF} ${BBLUE}${CFLAGS} -MMD${DF} ${BCYAN}-c${DF} ${BIRED}$<${DF} ${BCYAN}-o${DF} ${BIGREEN}$@${DF}"
-	mv ${@:.o=.d} ${DEP_D}
-#	@echo "${BCYAN}mv${DF} ${BYELLOW}${@:.o=.d}${DF} ${BCYAN}${DEP_D}${DF}"
+	@${CC} ${CFLAGS} -MMD -c $< -o $@
+	@echo "${BCYAN}${CC}${DF} ${BBLUE}${CFLAGS} -MMD${DF} ${BCYAN}-c${DF} ${BIRED}$<${DF} ${BCYAN}-o${DF} ${BIGREEN}$@${DF}"
+	@mv ${@:.o=.d} ${DEP_D}
+	@echo "${BCYAN}mv${DF} ${BYELLOW}${@:.o=.d}${DF} ${BCYAN}${DEP_D}${DF}"
 
 ${OBJ_D}:
-	mkdir ${OBJ_D}
-#	@echo "${BCYAN}mkdir${DF} ${BCYAN}${OBJ_D}${DF}"
+	@mkdir ${OBJ_D}
+	@echo "${BCYAN}mkdir${DF} ${BCYAN}${OBJ_D}${DF}"
 
 ${DEP_D}:
-	mkdir ${DEP_D}
-#	@echo "${BCYAN}mkdir${DF} ${BCYAN}${DEP_D}${DF}"
+	@mkdir ${DEP_D}
+	@echo "${BCYAN}mkdir${DF} ${BCYAN}${DEP_D}${DF}"
 
-${PRG_D}:
-	mkdir ${PRG_D}
+#${PRG_D}:
+#	mkdir ${PRG_D}
 #	@echo "${BCYAN}mkdir${DF} ${BCYAN}${PRG_D}${DF}"
 
 #<------------------------------------||-------------------------------------->#
 
 clean:
-	rm -rf ${OBJ_D} ${DEP_D}
-#	@echo "${RED}rm -rf${DF} ${BIGREEN}OBJECTS: ${OBJ_F}${DF}"
-#	@echo "${RED}rm -rf${DF} ${BYELLOW}DEPENDENCIES: ${DEP_F}${DF}"
+	@rm -rf ${OBJ_D} ${DEP_D}
+	@echo "${RED}rm -rf${DF} ${BIGREEN}OBJECTS: ${OBJ_F}${DF}"
+	@echo "${RED}rm -rf${DF} ${BYELLOW}DEPENDENCIES: ${DEP_F}${DF}"
 
 fclean: clean
-	rm -rf ${PRG_D}
-#	@echo "${RED}rm -rf${DF} ${RED}PROGRAM: ${NAME}${DF}"
+	@rm -rf ${PRG_D}
+	@echo "${RED}rm -rf${DF} ${RED}PROGRAM: ${NAME}${DF}"
 
 re : fclean all
 
