@@ -76,7 +76,7 @@ int	main(int argc, char **argv)
 		return (free(table.philos), free(table.forks),
 			printf("Mallocation failed\n"));
 	start_dinner(&oracle);
+	start_monitoring(&oracle);
 	print_info(&oracle);
 	free_all(&oracle);
 }
-//	start_monitoring(&oracle);

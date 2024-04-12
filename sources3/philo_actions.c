@@ -16,22 +16,12 @@ void	take_forks(t_philo *data, pthread_mutex_t *forks[2])
 {
 	long	now;
 
-//	take right
 	pthread_mutex_lock(fork[RIGHT]);
-	pthread_mutex_lock(&data->table.main->table_mutex);
-	now = gettime()
 	if (!is_death(data))
-			printf("[%p]\tPhilo %d took %d fork\n",
-				data->current_time - now, data->index, data->index);
-	pthread_mutex_unlock(&data->table.main->table_mutex);
-//	take left
+		print_action(data, TAKE, index);
 	pthread_mutex_lock(fork[LEFT]);
-	pthread_mutex_lock(&data->table.main->table_mutex);
-	now = gettime();
 	if (!is_death(data))
-			printf("[%p]\tPhilo %d took %d fork\n",
-				data->current_time - now, data->index, data->index + 1);
-	pthread_mutex_unlock(&data->table.main->table_mutex);
+		print_action(data, TAKE, index + 1);
 }
 
 void	eat_meal(t_philo *data)
@@ -39,12 +29,9 @@ void	eat_meal(t_philo *data)
 	long	now;
 	long	finish_time;
 
-	pthread_mutex_lock(&data->table.main->table_mutex);
-	now = gettime();
 	if (!is_death(data))
-			printf("[%p]\tPhilo %d is eating\n",
-				data->current_time - now, data->index);
-	pthread_mutex_unlock(&data->table.main->table_mutex);
+		print_action(data, EAT, -1);
+	now = gettime();
 	finish_time = data->current_time + data->table.time_to_eat;
 	usleep((finish_time - now) * 1000);
 }
@@ -53,23 +40,24 @@ void	leave_forks(t_philo *data, pthread_mutex_t *forks[2])
 {
 	long	now;
 
-	pthread_mutex_lock(&data->table.main->table_mutex);
-	now = gettime();
+	pthread_mutex_unlock(fork[RIGHT]);
+	pthread_mutex_unlock(fork[LEFT]);
 	if (!is_death(data))
-			printf("[%p]\tPhilo %d is eating\n",
-				data->current_time - now, data->index);
-	pthread_mutex_unlock(&data->table.main->table_mutex);
+	{
+		print_action(data, LEAVE, index);
+		print_action(data, LEAVE, index + 1);
+	}
 }
 
 void	sleep_and_think(t_philo *data)
 {
 	long	now;
 
-	usleep(() * 1000);
-	pthread_mutex_lock(&data->table.main->table_mutex);
-	now = gettime();
 	if (!is_death(data))
-			printf("[%p]\tPhilo %d is eating\n",
-				data->current_time - now, data->index);
-	pthread_mutex_unlock(&data->table.main->table_mutex);
+		print_action(data, SLEEP, -1);
+	now = gettime();
+	finish_time = data->current_time + data->table.time_to_sleep;
+	usleep((finish_time - now) * 1000);
+	if (!is_death(data))
+		print_action(data, THINK, -1);
 }

@@ -48,3 +48,23 @@ void	start_dinner(t_oracle *oracle)
 		index++;
 	}
 }
+
+void	oracle_routine(t_oracle *oracle, t_philo *philo_data)
+{
+
+}
+
+void	start_monitoring(t_oracle *oracle)
+{
+	int	index;
+
+	while (!oracle->dinner_ended)
+	{
+		index = 0;
+		while (index < oracle->number_philos)
+		{
+			oracle_routine(oracle, &oracle->philos_sheet[index]);
+			index++;
+		}
+	}
+}

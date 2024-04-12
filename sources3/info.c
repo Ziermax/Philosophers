@@ -40,11 +40,26 @@ int	is_satiated(t_philo *data)
 	return (satiated_info);
 }
 
-void	print_action(t_data *data, int flag)
+void	print_action(t_data *data, int flag, int fork_index)
 {
 	long	now;
 
 	pthread_mutex_lock(&data->table.main->table_mutex);
 	now = gettime();
-	printf();
+	if (flag == TAKE)
+	printf("[%ld]\tPhilo %d took %d fork\n",
+		data->current_time - now, data->index, fork_index);
+	if (flag == LEAVE)
+	printf("[%ld]\tPhilo %d dropped %d fork\n",
+		data->current_time - now, data->index, fork_index);
+	if (flag == EAT)
+	printf("[%ld]\tPhilo %d is eating\n",
+		data->current_time - now, data->index);
+	if (flag == SLEEP)
+	printf("[%ld]\tPhilo %d is sleeping\n",
+		data->current_time - now, data->index);
+	if (flag == THINK)
+	printf("[%ld]\tPhilo %d is thinking\n",
+		data->current_time - now, data->index);
+	pthread_mutex_unlock(&data->table.main->table_mutex);
 }
