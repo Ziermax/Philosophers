@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:32:07 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/11 21:16:03 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:30:30 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@
 # define RIGHT 0
 # define DEATH 42
 # define SATIATED 24
+# define TAKE 1
+# define LEAVE 2
+# define EAT 3
+# define SLEEP 4
+# define THINK 5
 
 typedef struct s_table
 {
 	int				number_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
 	int				minimum_meals;
 	long			starting_time;
 	pthread_t		*philos;
@@ -68,10 +73,12 @@ void	init_table(t_table *table, char **argv);
 void	init_oracle(t_oracle *oracle, t_table table);
 int		is_death(t_philo *data);
 int		is_satiated(t_philo *data);
+void	print_action(t_philo *data, int flag, long aux);
 void	take_forks(t_philo *data, pthread_mutex_t *forks[2]);
 void	eat_meal(t_philo *data);
 void	leave_forks(t_philo *data, pthread_mutex_t *forks[2]);
 void	sleep_and_think(t_philo *data);
 void	start_dinner(t_oracle *oracle);
+void	start_monitoring(t_oracle *oracle);
 
 #endif

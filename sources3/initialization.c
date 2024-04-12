@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:47:10 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/11 20:29:00 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:22:43 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	parser_input(t_table *table, char **argv)
 		if (i == 0)
 			table->number_philos = pos_fail_atoi(argv[i], &fail);
 		if (i == 1)
-			table->time_to_die = pos_fail_atoi(argv[i], &fail);
+			table->time_to_die = pos_fail_atoi(argv[i], &fail) * 1000;
 		if (i == 2)
-			table->time_to_eat = pos_fail_atoi(argv[i], &fail);
+			table->time_to_eat = pos_fail_atoi(argv[i], &fail) * 1000;
 		if (i == 3)
-			table->time_to_sleep = pos_fail_atoi(argv[i], &fail);
+			table->time_to_sleep = pos_fail_atoi(argv[i], &fail) * 1000;
 		if (i == 4)
-			table->minimum_meals = pos_fail_atoi(argv[i], &fail);
+			table->minimum_meals = pos_fail_atoi(argv[i], &fail) * 1000;
 		i++;
 	}
 	if (i == 4)

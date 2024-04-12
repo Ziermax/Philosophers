@@ -10,7 +10,7 @@ PRG_D =# ./philo/
 
 #SRC_F = main.c parser.c philosophers.c dinner.c
 #SRC_F = main.c parser.c init_table.c info.c dinner.c philo_actions.c
-SRC_F = main.c initialization.c info.c
+SRC_F = main.c initialization.c info.c dinner.c philo_actions.c
 SRC_D = ./sources3/
 
 OBJ_F = ${SRC_F:.c=.o}

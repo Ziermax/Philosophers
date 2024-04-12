@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:44:41 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/11 20:29:37 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/12 17:24:03 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_info(t_oracle *oracle)
 
 	now = gettime();
 	table = oracle->table;
-	printf("\n###TABLE###\nNPH: %d | TTD: %d | TTE: %d | TTS: %d | MIN:%d\n"
+	printf("\n###TABLE###\nNPH: %d | TTD: %ld | TTE: %ld | TTS: %ld | MIN:%d\n"
 		"Start: %li\nPhilo array: %p\nFork array: %p\nMain dir: %p\n\n",
 		table.number_philos, table.time_to_die, table.time_to_eat,
 		table.time_to_sleep, table.minimum_meals, now - table.starting_time,
