@@ -34,6 +34,22 @@ static void	print_exit(int exit_value, char *str)
 	exit(exit_value);
 }
 
+static void	dinner(t_oracle *oracle)
+{
+	int			index;
+	pthread_t	*philo_thread;
+	t_philo		*philo;
+
+	index = 0;
+	while (index < oracle->table.amount_philos)
+	{
+		philo_thread = &oracle->table.philo_threads[index];
+		philo = &oracle->philos[index];
+		pthread_create(philo_thread, NULL, philo_routine, philo);
+		index++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_table		table;

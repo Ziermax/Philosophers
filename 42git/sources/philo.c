@@ -12,7 +12,7 @@
 
 #include "../includes/philosophers.h"
 
-void	take_forks(t_philo *philo)
+static void	take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork[RIGHT]);
 	if (!is_death(philo))
@@ -22,7 +22,7 @@ void	take_forks(t_philo *philo)
 		print_action(philo, TAKE, data->index + 1);
 }
 
-void	eat_meal(t_philo *philo)
+static void	eat_meal(t_philo *philo)
 {
 	if (!is_death(philo))
 		print_action(philo, EAT, 0);
@@ -34,7 +34,7 @@ void	eat_meal(t_philo *philo)
 	pthread_mutex_unlock(&philo->philo_mutex);
 }
 
-void	leave_forks(t_philo *philo)
+static void	leave_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->fork[RIGHT]);
 	if (!is_death(philo))
@@ -44,7 +44,7 @@ void	leave_forks(t_philo *philo)
 		print_action(philo, LEAVE, data->index + 1);
 }
 
-void	sleep_and_think(t_philo *philo)
+static void	sleep_and_think(t_philo *philo)
 {
 	if (!is_death(philo))
 		print_action(philo, SLEEP, 0);
@@ -52,4 +52,20 @@ void	sleep_and_think(t_philo *philo)
 		usleep(philo->table.time_to_sleep);
 	if (!is_death(philo))
 		print_action(philo, THINK, 0);
+}
+
+void	*dinner_philo(void *arg)
+{
+	t_philo	*philo;
+
+	philo = arg;
+	if ((philo->index + 1) % 2)
+		usleep(500);
+	while (!is_death(philo))
+	{
+		take_forks(philo);
+		eat_meal(philo);
+		leave_forks(philo);
+		sleep_and_think(philo);
+	}
 }

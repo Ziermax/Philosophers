@@ -78,13 +78,7 @@ int		is_satiated(t_philo	*philo);
 int		is_time_to_die(t_oracle *oracle);
 void	print_action(t_philo *philo, int flag, long aux);
 
-void	dinner(t_oracle *oracle);
-
-void	take_forks(t_philo *philo);
-void	eat_meal(t_philo *philo);
-void	leave_forks(t_philo *philo);
-void	sleep_and_think(t_philo *philo);
-
+void	*philo_routine(void *arg);
 void	oracle_routine(t_oracle *oracle);
 
 #endif
