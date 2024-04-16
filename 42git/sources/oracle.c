@@ -36,23 +36,19 @@ static void	check_death(t_oracle *oracle)
 	t_philo	*philo;
 
 	index = 0;
-	while (index < oracle->table.amount_philos)
+	while (!oracle->dinner_ended && index < oracle->table.amount_philos)
 	{
-		philo = &oracle->philos[index];
+		philo = &oracle->philos[index++];
 		pthread_mutex_lock(&philo->philo_mutex);
 		if (!philo->fed)
 		{
 			print_action(philo, DEATH, 0);
 			oracle->dinner_ended = 1;
-			break ;
 		}
 		else
 			philo->fed = 0;
 		pthread_mutex_unlock(&philo->philo_mutex);
-		index++;
 	}
-	if (oracle->dinner_ended)
-		pthread_mutex_unlock(&philo->philo_mutex);
 }
 
 static void	cheack_satiated(t_oracle *oracle)
