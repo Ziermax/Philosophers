@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:44:41 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/12 17:24:03 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:21:07 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,15 @@ void	print_info(t_oracle *oracle)
 	t_table	table;
 	t_philo	*philo;
 	int		i;
-	long	now;
 
-	now = gettime();
 	table = oracle->table;
 	printf("\n###TABLE###\nNPH: %d | TTD: %ld | TTE: %ld | TTS: %ld | MIN:%d\n"
 		"Start: %li\nPhilo array: %p\nFork array: %p\nMain dir: %p\n\n",
 		table.number_philos, table.time_to_die, table.time_to_eat,
-		table.time_to_sleep, table.minimum_meals, now - table.starting_time,
+		table.time_to_sleep, table.minimum_meals, table.starting_time,
 		table.philos, table.forks, table.main);
 	printf("###ORACLE###\nCurrent time: %li\nDinner ended: %d\n"
-		"Philos sheet: %p\n\n", now - oracle->current_time,
+		"Philos sheet: %p\n\n", oracle->current_time,
 		oracle->dinner_ended, oracle->philos_sheet);
 	i = -1;
 	while (++i < oracle->table.number_philos)
@@ -54,7 +52,7 @@ void	print_info(t_oracle *oracle)
 		printf("###PHILO [%p]###\nindex: %d\nid: %p | fork: %p\nCurrent time: "
 			"%li\nMeal count: %d | Fed: %d | Death: %d\n\n", philo,
 			philo->index, philo->id, &oracle->table.forks[i],
-			now - philo->current_time, philo->meal_count, philo->fed,
+			philo->current_time, philo->meal_count, philo->fed,
 			philo->death);
 	}
 }
@@ -75,8 +73,8 @@ int	main(int argc, char **argv)
 	if (!oracle.philos_sheet)
 		return (free(table.philos), free(table.forks),
 			printf("Mallocation failed\n"));
+	print_info(&oracle);
 	start_dinner(&oracle);
 	start_monitoring(&oracle);
-	print_info(&oracle);
 	free_all(&oracle);
 }

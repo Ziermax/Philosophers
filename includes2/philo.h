@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:32:07 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/12 17:30:30 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:45:14 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_oracle
 {
 	long	current_time;
 	int		dinner_ended;
+	int		satiated_philos;
 	t_philo	*philos_sheet;
 	t_table	table;
 }	t_oracle;
@@ -73,6 +74,7 @@ void	init_table(t_table *table, char **argv);
 void	init_oracle(t_oracle *oracle, t_table table);
 int		is_death(t_philo *data);
 int		is_satiated(t_philo *data);
+int		is_time_to_die(t_oracle *oracle);
 void	print_action(t_philo *data, int flag, long aux);
 void	take_forks(t_philo *data, pthread_mutex_t *forks[2]);
 void	eat_meal(t_philo *data);

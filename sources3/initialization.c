@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 18:47:10 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/12 17:22:43 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:45:14 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	parser_input(t_table *table, char **argv)
 		if (i == 3)
 			table->time_to_sleep = pos_fail_atoi(argv[i], &fail) * 1000;
 		if (i == 4)
-			table->minimum_meals = pos_fail_atoi(argv[i], &fail) * 1000;
+			table->minimum_meals = pos_fail_atoi(argv[i], &fail);
 		i++;
 	}
 	if (i == 4)
@@ -114,6 +114,6 @@ void	init_oracle(t_oracle *oracle, t_table table)
 		printf("Philo %d: [%p]\n", index, &oracle->philos_sheet[index]);
 		index++;
 	}
-	oracle->current_time = table.starting_time;
+	oracle->current_time = table.starting_time + table.time_to_die;
 	oracle->dinner_ended = 0;
 }
