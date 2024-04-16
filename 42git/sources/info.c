@@ -71,5 +71,8 @@ void	print_action(t_philo *philo, int flag, long aux)
 	if (flag == THINK)
 		printf("[%ld\t"IP"Philo %d is thinking\n"DFT,
 			now - philo->table.starting_time, philo->index);
+	if (flag == DEATH)
+		printf("[%ld\t"IP"Philo %d is DEATH\n"DFT,
+			now - philo->table.starting_time, philo->index);
 	pthread_mutex_unlock(&data->table.main->table_mutex);
 }

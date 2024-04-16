@@ -25,13 +25,13 @@
 
 # define RIGHT 0
 # define LEFT 1
-# define DEATH 42
 # define SATITATED 24
 # define TAKE 1
 # define LEAVE 2
 # define EAT 3
 # define SLEEP 4
 # define THINK 5
+# define DEATH 6
 
 typedef struct s_table
 {

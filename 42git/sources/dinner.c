@@ -28,15 +28,6 @@ void	*dinner_philo(void *arg)
 	}
 }
 
-void	dinner_oracle(t_oracle *oracle)
-{
-	while (!oracle->dinner_ended)
-	{
-		oracle_routine(oracle);
-
-	}
-}
-
 void	dinner(t_oracle *oracle)
 {
 	int			index;
@@ -51,5 +42,4 @@ void	dinner(t_oracle *oracle)
 		pthread_create(philo_thread, NULL, dinner_philo, philo);
 		index++;
 	}
-	dinner_oracle(oracle);
 }
