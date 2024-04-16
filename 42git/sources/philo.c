@@ -54,7 +54,7 @@ static void	sleep_and_think(t_philo *philo)
 		print_action(philo, THINK, 0);
 }
 
-void	*dinner_philo(void *arg)
+void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
