@@ -34,13 +34,19 @@ static void	check_satiated(t_oracle *oracle)
 	if (oracle->dinner_ended)
 		return ;
 	index = 0;
-	oracle->satitated_philos = 0;
+	oracle->satiated_philos = 0;
 	while (index < oracle->table.amount_philos)
 	{
 		philo = &oracle->philos[index];
 		if (philo_status(philo, SATITATED))
-			oracle->satitated_philos += 1;
+			oracle->satiated_philos += 1;
 		index++;
+	}
+	if (oracle->satiated_philos == oracle->table.amount_philos)
+	{
+		pthread_mutex_lock(&oracle->table.main->table_mutex);
+		set_death(oracle);
+		pthread_mutex_unlock(&oracle->table.main->table_mutex);
 	}
 }
 
@@ -57,7 +63,11 @@ static void	check_death(t_oracle *oracle)
 		if (philo_status(philo, FED))
 			philo_status(philo, RESET_FED);
 		else
+		{
+			print_status(philo, DEATH);
 			set_death(oracle);
+			break ;
+		}
 		index++;
 	}
 	pthread_mutex_lock(&oracle->table.main->table_mutex);
@@ -65,12 +75,18 @@ static void	check_death(t_oracle *oracle)
 
 void	oracle_routine(t_oracle *oracle)
 {
+	if (oracle->table.minimun_meals == -1)
+	{
+		while (!oracle->dinner_ended)
+			if (is_time_to_die(oracle))
+				check_death(oracle);
+		return ;
+	}
 	while (!oracle->dinner_ended)
 	{
 		if (is_time_to_die(oracle))
 			check_death(oracle);
-		if (oracle->table.minimun_meals != -1)
-			check_satiated(oracle);
+		check_satiated(oracle);
 	}
 }
 

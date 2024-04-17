@@ -33,7 +33,10 @@ int	philo_status(t_philo *philo, int flag)
 	else if (flag == FED)
 		info = philo->fed;
 	else if (flag == SET_FED)
+	{
 		philo->fed = 1;
+		philo->meal_count += 1;
+	}
 	else if (flag == RESET_FED)
 		philo->fed = 0;
 	else if (flag == SET_DEATH)
@@ -54,11 +57,10 @@ int	is_time_to_die(t_oracle *oracle)
 	return (0);
 }
 
-void	print_action(t_philo *philo, int flag, long aux)
+void	print_status(t_philo *philo, int flag, long aux)
 {
 	long	now;
 
-	pthread_mutex_lock(&philo->table.main->table_mutex);
 	now = gettime();
 	if (flag == TAKE)
 		printf("[%ld]\t"BIG"Philo %d took %ld fork\n"DFT,
@@ -78,5 +80,12 @@ void	print_action(t_philo *philo, int flag, long aux)
 	if (flag == DEATH)
 		printf("[%ld]\t"CR"Philo %d is DEATH\n"DFT,
 			(now - philo->table.starting_time) / 1000, philo->index);
+}
+
+void	print_action(t_philo *philo, int flag, long aux)
+{
+	pthread_mutex_lock(&philo->table.main->table_mutex);
+	if (!philo_status(philo, DEATH))
+		print_status(philo, flag, aux),
 	pthread_mutex_unlock(&philo->table.main->table_mutex);
 }
