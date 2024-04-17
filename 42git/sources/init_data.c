@@ -6,13 +6,13 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:05:31 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/16 16:28:49 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:24:33 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static void	fail_pos_atoi(char *num, int *fail)
+static int	fail_pos_atoi(char *num, int *fail)
 {
 	unsigned int	nbr;
 
@@ -24,13 +24,13 @@ static void	fail_pos_atoi(char *num, int *fail)
 		nbr = nbr * 10 + *num - '0';
 		if (nbr > 2147483647)
 		{
-			*fail_flag = 1;
+			*fail = 1;
 			break ;
 		}
 		num++;
 	}
 	if (*num)
-		*fail_flag = 1;
+		*fail = 1;
 	return ((int)nbr);
 }
 
@@ -44,7 +44,7 @@ static void	parser_input(t_table *table, char **argv)
 	while (argv[i])
 	{
 		if (i == 0)
-			table->number_philos = fail_pos_atoi(argv[i], &fail);
+			table->amount_philos = fail_pos_atoi(argv[i], &fail);
 		if (i == 1)
 			table->time_to_die = fail_pos_atoi(argv[i], &fail) * 1000;
 		if (i == 2)
@@ -52,13 +52,13 @@ static void	parser_input(t_table *table, char **argv)
 		if (i == 3)
 			table->time_to_sleep = fail_pos_atoi(argv[i], &fail) * 1000;
 		if (i == 4)
-			table->minimum_meals = fail_pos_atoi(argv[i], &fail);
+			table->minimun_meals = fail_pos_atoi(argv[i], &fail);
 		i++;
 	}
 	if (i == 4)
-		table->minimum_meals = -1;
-	if (fail || table->number_philos > 400)
-		table->number_philos = 0;
+		table->minimun_meals = -1;
+	if (fail || table->amount_philos > 400)
+		table->amount_philos = 0;
 }
 
 void	init_table(t_table *table, char **argv)
@@ -74,8 +74,8 @@ void	init_table(t_table *table, char **argv)
 		return (free(table->philo_threads));
 	index = 0;
 	while (index < table->amount_philos)
-		pthread_mutex_init(&table->forks[index++]);
-	pthread_mutex_init(&table->table_mutex);
+		pthread_mutex_init(&table->forks[index++], NULL);
+	pthread_mutex_init(&table->table_mutex, NULL);
 	table->main = table;
 	table->starting_time = gettime();
 }
@@ -85,14 +85,22 @@ void	init_philo(t_philo *philo, int index, t_table table)
 	philo->index = index;
 	philo->id = &table.philo_threads[index];
 	philo->current_time = table.starting_time;
-	philo->fork[RIGHT] = table.fork[index];
+	philo->fork[RIGHT] = &table.forks[index];
+	philo->fork_id[RIGHT] = index;
 	if (index + 1 != table.amount_philos)
-		philo->fork[LEFT] = table.fork[index + 1];
+	{
+		philo->fork[LEFT] = &table.forks[index + 1];
+		philo->fork_id[LEFT] = index + 1;
+	}
 	else
-		philo->fork[LEFT] = table.fork[0];
+	{
+		philo->fork[LEFT] = &table.forks[0];
+		philo->fork_id[LEFT] = 0;
+	}
 	philo->meal_count = 0;
 	philo->fed = 0;
 	philo->death = 0;
+	pthread_mutex_init(&philo->philo_mutex, NULL);
 	philo->table = table;
 }
 

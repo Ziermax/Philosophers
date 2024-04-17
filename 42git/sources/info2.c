@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:29:06 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/17 20:46:18 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:03:01 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,27 @@ long	gettime(void)
 	return (time.tv_sec * 1e6 + time.tv_usec);
 }
 
-int	is_death(t_philo *philo)
+int	philo_status(t_philo *philo, int flag)
 {
-	int	death_info;
-
-	pthread_mutex_lock(&philo->table.main->table_mutex);
-	pthread_mutex_unlock(&philo->table.main->table_mutex);
-	pthread_mutex_lock(&philo->philo_mutex);
-	death_info = philo->death;
-	pthread_mutex_unlock(&philo->philo_mutex);
-	return (death_info);
-}
-
-int	is_satiated(t_philo *philo)
-{
-	int	satiated_info;
+	int	info;
 
 	pthread_mutex_lock(&philo->philo_mutex);
-	satiated_info = philo->meal_count >= philo->table.minimun_meals;
+	if (flag == DEATH)
+		info = philo->death;
+	else if (flag == SATITATED)
+		info = philo->meal_count >= philo->table.minimun_meals;
+	else if (flag == FED)
+		info = philo->fed;
+	else if (flag == SET_FED)
+		philo->fed = 1;
+	else if (flag == RESET_FED)
+		philo->fed = 0;
+	else if (flag == SET_DEATH)
+		philo->death = 1;
+	else
+		info = -1;
 	pthread_mutex_unlock(&philo->philo_mutex);
-	return (satiated_info);
+	return (info);
 }
 
 int	is_time_to_die(t_oracle *oracle)

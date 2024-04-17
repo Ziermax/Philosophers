@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:01:47 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/16 20:24:13 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:05:33 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	join_destroy_and_free(t_table table, t_oracle oracle)
 	index = 0;
 	while (index < table.amount_philos)
 	{
-		pthread_join(table.philo_threads[index]);
+		pthread_join(table.philo_threads[index], NULL);
 		pthread_mutex_destroy(&table.forks[index]);
 		index++;
 	}
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 		print_exit(0, "Wrong syntax in arguments");
 	if (!table.philo_threads)
 		print_exit(0, "Failed mallocation");
-	init_oracle(&oracle, &table);
+	init_oracle(&oracle, table);
 	if (!oracle.philos)
 		print_exit(0, "Failed mallocation");
 	dinner(&oracle);
