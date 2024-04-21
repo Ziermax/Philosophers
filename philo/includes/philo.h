@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:35:33 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/21 16:02:20 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:00:34 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	set_death(t_philo *philo);
 void	set_fed(t_philo *philo);
 /*	Info	*/
 long	gettime(void);
-int		is_time_to_die(t_oracle *oracle);
 int		is_death(t_philo *philo);
 int		is_fed(t_philo *philo);
 int		is_satiated(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 15:25:06 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/21 15:33:28 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:59:49 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,4 @@ long	gettime(void)
 	gettimeofday(&time, NULL);
 	time.tv_sec %= 31556925;
 	return (time.tv_sec * 1e6 + time.tv_usec);
-}
-
-int	is_time_to_die(t_oracle *oracle)
-{
-	if (oracle->current_time >= gettime())
-		return (0);
-	oracle->current_time += oracle->table.time_to_die;
-	return (1);
 }
