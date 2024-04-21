@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 16:05:31 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/17 17:24:33 by mvelazqu         ###   ########.fr       */
+/*   Created: 2024/04/20 16:41:09 by mvelazqu          #+#    #+#             */
+/*   Updated: 2024/04/21 15:53:43 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../includes/philo.h"
 
 static int	fail_pos_atoi(char *num, int *fail)
 {
@@ -29,7 +29,7 @@ static int	fail_pos_atoi(char *num, int *fail)
 		}
 		num++;
 	}
-	if (*num)
+	if (*num || nbr == 0)
 		*fail = 1;
 	return ((int)nbr);
 }
@@ -57,9 +57,10 @@ static void	parser_input(t_table *table, char **argv)
 	}
 	if (i == 4)
 		table->minimun_meals = -1;
-	if (fail || table->amount_philos > 400)
+	if (fail)
 		table->amount_philos = 0;
 }
+// || table->amount_philos > 400)
 
 void	init_table(t_table *table, char **argv)
 {
@@ -80,25 +81,23 @@ void	init_table(t_table *table, char **argv)
 	table->starting_time = gettime();
 }
 
-void	init_philo(t_philo *philo, int index, t_table table)
+static void	init_philo(t_philo *philo, int index, t_table table)
 {
-	philo->index = index;
-	philo->id = &table.philo_threads[index];
-	philo->current_time = table.starting_time;
+	philo->index = index + 1;
+	philo->last_meal = table.starting_time;
 	philo->fork[RIGHT] = &table.forks[index];
-	philo->fork_id[RIGHT] = index;
+	philo->fork_id[RIGHT] = index + 1;
 	if (index + 1 != table.amount_philos)
 	{
 		philo->fork[LEFT] = &table.forks[index + 1];
-		philo->fork_id[LEFT] = index + 1;
+		philo->fork_id[LEFT] = index + 2;
 	}
 	else
 	{
 		philo->fork[LEFT] = &table.forks[0];
-		philo->fork_id[LEFT] = 0;
+		philo->fork_id[LEFT] = 1;
 	}
 	philo->meal_count = 0;
-	philo->fed = 0;
 	philo->death = 0;
 	pthread_mutex_init(&philo->philo_mutex, NULL);
 	philo->table = table;
