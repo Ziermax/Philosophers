@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:09:27 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/21 19:00:20 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:32:25 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ static void	check_satiated(t_oracle *oracle)
 		index++;
 	}
 	if (oracle->satiated_philos == oracle->table.amount_philos)
-	{
-		pthread_mutex_lock(&oracle->table.main->table_mutex);
 		kill_philos(oracle);
-		pthread_mutex_unlock(&oracle->table.main->table_mutex);
-	}
 }
 
 static void	check_death(t_oracle *oracle)
@@ -60,16 +56,17 @@ static void	check_death(t_oracle *oracle)
 	index = 0;
 	while (index < oracle->table.amount_philos)
 	{
+		pthread_mutex_lock(&oracle->table.main->table_mutex);
 		if (!is_fed(&oracle->philos[index]))
 		{
-			pthread_mutex_lock(&oracle->table.main->table_mutex);
 			printf("[%ld]\t"CR"Philo %d is DEATH\n"DFT,
 				(gettime() - oracle->philos[index].table.starting_time) / 1000,
 				oracle->philos[index].index);
 			kill_philos(oracle);
-			pthread_mutex_unlock(&oracle->table.main->table_mutex);
-			break ;
 		}
+		pthread_mutex_unlock(&oracle->table.main->table_mutex);
+		if (oracle->dinner_ended)
+			break ;
 		index++;
 	}
 }
@@ -80,14 +77,14 @@ void	oracle_routine(t_oracle *oracle)
 	{
 		while (!oracle->dinner_ended)
 		{
-			usleep(2000);
+			usleep(5000);
 			check_death(oracle);
 		}
 		return ;
 	}
 	while (!oracle->dinner_ended)
 	{
-		usleep(4000);
+		usleep(7000);
 		check_death(oracle);
 		check_satiated(oracle);
 	}

@@ -1,7 +1,7 @@
 #<--------------------------------|VARIABLES|--------------------------------->#
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 NAME = philo
 
 #<----------------------------------|FILES|----------------------------------->#
@@ -40,6 +40,7 @@ BIGREEN = \033[1;92m#	Green
 all: ${NAME}
 
 ${NAME}: ${OBJ_D} ${DEP_D} ${OBJ}
+#	@${CC} ${CFLAGS} -fsanitize=thread -lpthread ${OBJ} -o ${NAME}
 	@${CC} ${CFLAGS} -lpthread ${OBJ} -o ${NAME}
 	@echo "${RED}Compiling progam:${DF}"
 	@echo "${BCYAN}${CC}${DF} ${BBLUE}${CFLAGS}${DF} ${BIGREEN}${OBJ_F}${DF} \

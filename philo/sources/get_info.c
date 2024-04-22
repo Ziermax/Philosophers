@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 15:25:06 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/21 18:59:49 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:41:18 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_fed(t_philo *philo)
 	int	fed_info;
 
 	pthread_mutex_lock(&philo->philo_mutex);
-	fed_info = philo->last_meal > gettime() - philo->table.time_to_die;
+	fed_info = philo->last_meal >= gettime() - philo->table.time_to_die;
 	pthread_mutex_unlock(&philo->philo_mutex);
 	return (fed_info);
 }

@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:29:50 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/21 15:40:04 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:47:09 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static void	leave_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->fork[RIGHT]);
 	print_leave(philo, philo->fork_id[RIGHT]);
+	set_fed(philo);
 	pthread_mutex_unlock(philo->fork[LEFT]);
 	print_leave(philo, philo->fork_id[LEFT]);
 }
 
 static void	sleep_and_think(t_philo *philo)
 {
-	set_fed(philo);
 	print_sleep(philo);
 	if (!is_death(philo))
 		precise_usleep(philo->table.time_to_sleep);
