@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:09:27 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/22 22:32:25 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:51:52 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ void	oracle_routine(t_oracle *oracle)
 	{
 		while (!oracle->dinner_ended)
 		{
-			usleep(5000);
+			usleep(3000);
 			check_death(oracle);
 		}
 		return ;
 	}
 	while (!oracle->dinner_ended)
 	{
-		usleep(7000);
+		usleep(3000);
 		check_death(oracle);
 		check_satiated(oracle);
 	}
