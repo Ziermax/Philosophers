@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:29:50 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/22 21:47:09 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:32:16 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	take_forks(t_philo *philo)
 	print_take(philo, philo->fork_id[RIGHT]);
 	pthread_mutex_lock(philo->fork[LEFT]);
 	print_take(philo, philo->fork_id[LEFT]);
+	set_fed(philo);
 }
 
 static void	eat_meal(t_philo *philo)
@@ -31,7 +32,6 @@ static void	leave_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->fork[RIGHT]);
 	print_leave(philo, philo->fork_id[RIGHT]);
-	set_fed(philo);
 	pthread_mutex_unlock(philo->fork[LEFT]);
 	print_leave(philo, philo->fork_id[LEFT]);
 }

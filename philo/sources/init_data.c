@@ -6,7 +6,7 @@
 /*   By: mvelazqu <mvelazqu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:41:09 by mvelazqu          #+#    #+#             */
-/*   Updated: 2024/04/21 15:53:43 by mvelazqu         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:34:28 by mvelazqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	init_table(t_table *table, char **argv)
 	int	index;
 
 	parser_input(table, argv);
+	if (!table->amount_philos)
+		return ;
 	table->philo_threads = malloc(sizeof(pthread_t) * table->amount_philos);
 	if (!table->philo_threads)
 		return ;
